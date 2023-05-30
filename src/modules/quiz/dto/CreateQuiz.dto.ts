@@ -6,6 +6,8 @@ import {
    ArrayMinSize
 } from 'class-validator'
 
+import { ArrayDistinct,correctAnsStringLength } from 'src/decorators/createQuiz.decorators'
+
 export class CreateQuizDto {
    @IsString()
    @Length(1, 255 )
@@ -21,14 +23,15 @@ export class CreateQuizDto {
 
    @IsArray()
    @IsString({ each: true })
-   @Length(2, 2, {
+   @Length(1, 255, {
       each: true,
    })
    @ArrayMaxSize(64)
    @ArrayMinSize(1)
+   @ArrayDistinct()
    answers: string[]
 
-
+   @correctAnsStringLength(1,255)
    correctAns: string | string[]
 }
 
