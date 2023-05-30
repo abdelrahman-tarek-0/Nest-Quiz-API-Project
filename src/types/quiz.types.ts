@@ -4,6 +4,7 @@ interface QuizType {
     description:string;
     choices : string[];
     correctAns?: string | string[];
+    createdAt:Date
 }
 interface QuizTypePost {
     title: string;
