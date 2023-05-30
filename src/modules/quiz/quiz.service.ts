@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { QuizType } from 'src/types/quiz.types'
+import { QuizType, QuizTypePost } from 'src/types/quiz.types'
 
 const quizzes: QuizType[] = [
    {
@@ -34,5 +34,15 @@ export class QuizService {
       return quizzes.map((quiz) => {
          return { ...quiz, correctAns: undefined }
       })
+   }
+
+   createQuiz(quiz: QuizTypePost): QuizType {
+      const newQuiz: QuizType = {
+         ...quiz,
+         id: `0${Number(quizzes[quizzes.length - 1].id) + 1}`,
+      }
+
+      quizzes.push(newQuiz)
+      return newQuiz
    }
 }
