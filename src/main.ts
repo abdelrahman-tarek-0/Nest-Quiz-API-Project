@@ -8,6 +8,7 @@ async function bootstrap() {
    const app = await NestFactory.create<NestExpressApplication>(AppModule,{
     rawBody:true
    })
+   
    app.useGlobalInterceptors(new LoggingInterceptor)
    app.useBodyParser("json",{limit:'10kb'})
    app.enableCors()
