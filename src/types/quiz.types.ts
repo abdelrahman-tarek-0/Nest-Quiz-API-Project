@@ -1,6 +1,7 @@
 interface QuizType {
     id: string;
-    quiz: string;
+    title: string;
+    description:string;
     type: 'single' | 'multi';
     answers : string[];
     correctAns?: string | string[];
