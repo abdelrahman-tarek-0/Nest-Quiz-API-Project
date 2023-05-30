@@ -9,9 +9,8 @@ import {
 
 import {
    ArrayDistinct,
-   correctAnsStringLength,
-   checkAnswerInAnswers,
-} from 'src/decorators/createQuiz.decorators'
+   checkValueInArray,
+} from 'src/decorators/dto.decorators'
 
 export class CreateQuizDto {
    @IsString()
@@ -33,14 +32,7 @@ export class CreateQuizDto {
    @ArrayDistinct()
    choices: string[]
 
-   @correctAnsStringLength(1, 255)
    @ArrayDistinct()
-   @checkAnswerInAnswers('choices')
+   @checkValueInArray('choices')
    correctAns: string | string[]
 }
-
-//   title: string;
-//     description: string;
-//     type: 'single' | 'multi';
-//     answers : string[];
-//     correctAns: string | string[];

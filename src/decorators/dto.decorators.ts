@@ -29,42 +29,12 @@ export function ArrayDistinct(validationOptions?: ValidationOptions): Function {
    }
 }
 
-// check if the correct ans have a proper length and ignore any array input
-export function correctAnsStringLength(
-   min: number,
-   max: number,
-   validationOptions?: ValidationOptions
-): Function {
-   return (object: Object, propertyName: string): void => {
-      registerDecorator({
-         name: 'ArrayDistinct',
-         target: object.constructor,
-         propertyName,
-         options: validationOptions,
-         validator: {
-            validate(value: string[] | string): boolean {
-               if (Array.isArray(value)) {
-                  return true
-               } else if (
-                  typeof value === 'string' &&
-                  value.length >= min &&
-                  value.length <= max
-               ) {
-                  return true
-               }
-               return false
-            },
-            defaultMessage(args: ValidationArguments): string {
-               return `${args.property} must not be between ${min} and ${max} characters`
-            },
-         },
-      })
-   }
-}
-
-// check if the ans provided is in the list of the choices provided
-export function checkAnswerInAnswers(
-   property: string,
+// check if the value is in the array
+// property can be array ['22','2321']
+// can be reference to another property in the class
+// can be a string without not referencing to another property
+export function checkValueInArray(
+   property: string | string[],
    validationOptions?: ValidationOptions
 ): Function {
    return (object: Object, propertyName: string): void => {
@@ -76,8 +46,16 @@ export function checkAnswerInAnswers(
          options: validationOptions,
          validator: {
             validate(value: string[] | string, args): boolean {
-               const [relatedProbityName] = args.constraints
-               const prop = (args.object as any)[relatedProbityName] as string[]
+               let prop: string[] = []
+               const [relatedProbity] = args.constraints
+               if (typeof relatedProbity === 'string') {
+                  prop = (args.object as any)[relatedProbity] || [
+                     relatedProbity,
+                  ]
+                  if (!Array.isArray(prop)) prop = []
+               } else if (Array.isArray(relatedProbity)) {
+                  prop = relatedProbity
+               }
 
                if (typeof value === 'string') {
                   return prop.includes(value)
@@ -94,8 +72,16 @@ export function checkAnswerInAnswers(
                return false
             },
             defaultMessage(args: ValidationArguments): string {
-               const [relatedProbityName] = args.constraints
-               const prop = (args.object as any)[relatedProbityName] as string[]
+               let prop: string[] = []
+               const [relatedProbity] = args.constraints
+               if (typeof relatedProbity === 'string') {
+                  prop = (args.object as any)[relatedProbity] || [
+                     relatedProbity,
+                  ]
+               } else if (Array.isArray(relatedProbity)) {
+                  prop = relatedProbity
+               }
+
                return `${args.property} must be in the [${prop}] choices`
             },
          },
