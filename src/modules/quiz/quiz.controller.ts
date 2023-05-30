@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body } from '@nestjs/common'
+import { Controller, Get, Post, Body, UsePipes, ValidationPipe } from '@nestjs/common'
 import { QuizService } from './quiz.service'
 import { QuizTypePost } from 'src/types/quiz.types'
+import { CreateQuizDto } from './dto/CreateQuiz.dto'
 
 @Controller('quiz')
 export class QuizController {
@@ -12,7 +13,8 @@ export class QuizController {
    }
 
    @Post('/')
-   createQuiz(@Body() quiz:QuizTypePost) {
+   @UsePipes(ValidationPipe)
+   createQuiz(@Body() quiz:CreateQuizDto) {
     return this.quizService.createQuiz(quiz)
    }
 }
