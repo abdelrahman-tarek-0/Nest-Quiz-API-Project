@@ -2,15 +2,13 @@ interface QuizType {
     id: string;
     title: string;
     description:string;
-    type: 'single' | 'multi';
-    answers : string[];
+    choices : string[];
     correctAns?: string | string[];
 }
 interface QuizTypePost {
     title: string;
     description: string;
-    type: 'single' | 'multi';
-    answers : string[];
+    choices : string[];
     correctAns: string | string[];
 }
 

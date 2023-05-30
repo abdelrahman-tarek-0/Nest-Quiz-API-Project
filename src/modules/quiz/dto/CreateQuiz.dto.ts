@@ -3,23 +3,24 @@ import {
    Length,
    IsArray,
    ArrayMaxSize,
-   ArrayMinSize
+   ArrayMinSize,
+   ArrayNotEmpty
 } from 'class-validator'
 
-import { ArrayDistinct,correctAnsStringLength } from 'src/decorators/createQuiz.decorators'
+import {
+   ArrayDistinct,
+   correctAnsStringLength,
+   checkAnswerInAnswers,
+} from 'src/decorators/createQuiz.decorators'
 
 export class CreateQuizDto {
    @IsString()
-   @Length(1, 255 )
+   @Length(1, 255)
    title: string
 
    @IsString()
    @Length(1, 4095)
    description: string
-
-   @IsString()
-   @Length(5, 6)
-   type: 'single' | 'multi'
 
    @IsArray()
    @IsString({ each: true })
@@ -28,10 +29,13 @@ export class CreateQuizDto {
    })
    @ArrayMaxSize(64)
    @ArrayMinSize(1)
+   @ArrayNotEmpty()
    @ArrayDistinct()
-   answers: string[]
+   choices: string[]
 
-   @correctAnsStringLength(1,255)
+   @correctAnsStringLength(1, 255)
+   @ArrayDistinct()
+   @checkAnswerInAnswers('choices')
    correctAns: string | string[]
 }
 
