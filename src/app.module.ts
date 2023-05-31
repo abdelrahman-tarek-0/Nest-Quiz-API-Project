@@ -13,6 +13,7 @@ import { Quiz } from './modules/quiz/entities/quiz.entity'
          database: 'quizDB.db',
          entities: [__dirname + '/**/*.entity{.ts,.js}'],
          synchronize: true,
+         logging: true
       })
    ],
    controllers: [AppController],
