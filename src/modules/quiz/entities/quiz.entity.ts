@@ -5,7 +5,11 @@ import {
    Column,
    CreateDateColumn,
    UpdateDateColumn,
+   OneToMany,
 } from 'typeorm'
+
+import { QuizChoices } from './quiz-choices.entity'
+
 
 @Entity('quizzes')
 export class Quiz extends BaseEntity {
@@ -23,17 +27,21 @@ export class Quiz extends BaseEntity {
    })
    description: string
 
+   @OneToMany(() => QuizChoices, (quizChoices) => quizChoices.quiz, {
+      cascade: true,
+   })
+   choices: QuizChoices[]
+
    @CreateDateColumn({
       type: 'datetime',
       default: () => 'CURRENT_TIMESTAMP',
    })
-    createdAt: Date
+   createdAt: Date
 
    @UpdateDateColumn({
       type: 'datetime',
       default: () => 'CURRENT_TIMESTAMP',
       onUpdate: 'CURRENT_TIMESTAMP',
    })
-    updatedAt: Date
-
+   updatedAt: Date
 }

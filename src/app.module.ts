@@ -3,7 +3,7 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { QuizModule } from './modules/quiz/quiz.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { Quiz } from './modules/quiz/quiz.entity'
+import { Quiz } from './modules/quiz/entities/quiz.entity'
 
 @Module({
    imports: [

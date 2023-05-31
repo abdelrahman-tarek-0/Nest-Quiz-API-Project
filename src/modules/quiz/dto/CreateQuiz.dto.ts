@@ -4,13 +4,11 @@ import {
    IsArray,
    ArrayMaxSize,
    ArrayMinSize,
-   ArrayNotEmpty
+   ArrayNotEmpty,
+   ValidateIf,
 } from 'class-validator'
 
-import {
-   ArrayDistinct,
-   checkValueInArray,
-} from 'src/decorators/dto.decorators'
+import { distinctChoices,checkChoiceInsideChoices } from 'src/decorators/dto.decorators'
 
 export class CreateQuizDto {
    @IsString()
@@ -21,18 +19,19 @@ export class CreateQuizDto {
    @Length(1, 4095)
    description: string
 
+   @IsString()
+   @Length(0, 255)
+   @ValidateIf((o) => o.imageUrl !== undefined)
+
+
    @IsArray()
-   @IsString({ each: true })
-   @Length(1, 255, {
-      each: true,
-   })
+   @ArrayNotEmpty()
    @ArrayMaxSize(64)
    @ArrayMinSize(1)
-   @ArrayNotEmpty()
-   @ArrayDistinct()
-   choices: string[]
-
-   @ArrayDistinct()
-   @checkValueInArray('choices')
-   correctAns: string | string[]
+   @checkChoiceInsideChoices()
+   @distinctChoices()
+   choices: {
+      choice: string
+      isCorrect?: boolean
+   }[]
 }
