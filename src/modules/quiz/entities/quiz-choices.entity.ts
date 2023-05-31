@@ -23,6 +23,11 @@ export class QuizChoices extends BaseEntity {
    })
    isCorrect: boolean
 
+   @Column({
+      type: 'nvarchar',
+      nullable: true,
+   })
+   imageUrl: string
 
    @ManyToOne(() => Quiz, (quiz) => quiz.choices, {})
    quiz: Quiz

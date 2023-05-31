@@ -32,6 +32,7 @@ export class CreateQuizDto {
    @distinctChoices()
    choices: {
       choice: string
+      imageUrl?: string
       isCorrect?: boolean
    }[]
 }
