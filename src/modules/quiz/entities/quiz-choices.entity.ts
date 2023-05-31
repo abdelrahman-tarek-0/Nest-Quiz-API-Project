@@ -7,7 +7,7 @@ import {
 } from 'typeorm'
 import { Quiz } from './quiz.entity'
 
-@Entity('quizzes-choices')
+@Entity('quizzesChoices')
 export class QuizChoices extends BaseEntity {
    @PrimaryGeneratedColumn('uuid')
    id: string

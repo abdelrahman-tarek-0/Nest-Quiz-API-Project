@@ -19,10 +19,6 @@ export class CreateQuizDto {
    @Length(1, 4095)
    description: string
 
-   @IsString()
-   @Length(0, 255)
-   @ValidateIf((o) => o.imageUrl !== undefined)
-
 
    @IsArray()
    @ArrayNotEmpty()

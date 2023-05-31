@@ -12,12 +12,18 @@ export class QuizService {
 
    async getAllQuizzes(): Promise<Quiz[]> {
       const quizzes =  await this.quizRepo.find({
-         relations: {
-            choices: {
-               id: true as never,
-            
+         select:{
+            id: true,
+            title: true,
+            description: true,
+            choices:{
+               id: true,
+               choice: true,
+               imageUrl: true
             }
-            
+         },
+         relations: {
+            choices: true
          }
       })
       return quizzes
