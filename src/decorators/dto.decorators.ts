@@ -115,6 +115,28 @@ export function distinctChoices(validationOptions?: ValidationOptions) {
   };
 }
 
+
+export function validatorCb(cb,validationOptions?: ValidationOptions) {
+  return (object: unknown, propertyName: string): void => {
+    registerDecorator({
+      name: 'ArrayDistinct',
+      target: object.constructor,
+      propertyName,
+      constraints:[cb],
+      options: validationOptions,
+      validator: {
+        validate(value: unknown,args): boolean {
+          const [cb] = args.constraints;
+          return cb(value);
+        },
+        defaultMessage(args: ValidationArguments): string {
+          return `${args.property} is not valid`;
+        },
+      },
+    });
+  };
+}
+
 // check if the value is in the array
 // property can be array ['22','2321']
 // can be reference to another property in the class

@@ -1,5 +1,5 @@
 {
-  "name": "nest project",
+  "name": "nest-quiz-project",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -71,5 +71,12 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "pkg": {
+    "scripts": "dist/**/*.js",
+    "assets": "node_modules/sqlite3/lib/binding/napi-v6-win32-unknown-x64/**/*",
+    "targets": [ "win" ],
+    "outputPath": "dist"
+  },
+  "bin": "dist/main.js"
 }
